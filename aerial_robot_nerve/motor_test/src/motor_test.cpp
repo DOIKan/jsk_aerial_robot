@@ -27,7 +27,7 @@ public:
     nhp_.param("min_pwm_value", min_pwm_value_, 1100);
     nhp_.param("max_pwm_value", max_pwm_value_, 1950);
 
-    nhp_.param("stop_pwm_value", stop_pwm_value_, 1000);
+    nhp_.param("stop_pwm_value", stop_pwm_value_, 1500);
     nhp_.param("pwm_range", pwm_range_, 2000.0);
 
     /* one-shot mode */
