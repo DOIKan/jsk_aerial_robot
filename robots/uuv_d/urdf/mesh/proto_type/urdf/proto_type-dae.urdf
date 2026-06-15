@@ -1,0 +1,536 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<robot name="proto_type_4">
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-4.97441546509769e-06 1.31214560991818e-05 -0.165570321518981" rpy="0.0 -0.0 0.0"/>
+      <mass value="1.63288702957867"/>
+      <inertia ixx="0.0078532701523496" ixy="4.15087212249553e-05" ixz="-4.67638765406896e-11" iyy="0.00846439581729698" iyz="-1.77459249477566e-11" izz="0.00422885102236487"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/base_link.dae"/>
+      </geometry>
+      <material name="__unnamed_material_1"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/base_link.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t1">
+    <inertial>
+      <origin xyz="-0.014292 -0.0143 0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9154e-05" ixy="6.1395e-08" ixz="-3.7817e-06" iyy="7.9136e-05" iyz="-3.804e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t1.dae"/>
+      </geometry>
+      <material name="__unnamed_material_2"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t1.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust1">
+    <inertial>
+      <origin xyz="-1.19904086659517e-14 -2.5729418595688e-14 -0.000999999999986234" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.00283424938765199"/>
+      <inertia ixx="6.52506444943004e-07" ixy="-1.05879118406788e-21" ixz="3.04402465419514e-22" iyy="6.52506444942997e-07" iyz="-3.97046694025453e-22" izz="1.30312339029423e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust1.dae"/>
+      </geometry>
+      <material name="__unnamed_material_3"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust1.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t2">
+    <inertial>
+      <origin xyz="-0.0143 0.014292 0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9136e-05" ixy="-6.1395e-08" ixz="-3.804e-06" iyy="7.9154e-05" iyz="3.7817e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t2.dae"/>
+      </geometry>
+      <material name="__unnamed_material_4"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t2.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust2">
+    <inertial>
+      <origin xyz="1.13242748511766e-14 2.95874436062604e-14 0.00100000000002698" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.00283424938765202"/>
+      <inertia ixx="6.52506444943003e-07" ixy="5.05572790392411e-21" ixz="5.69100261436483e-22" iyy="6.52506444943006e-07" iyz="-1.05879118406788e-22" izz="1.30312339029424e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust2.dae"/>
+      </geometry>
+      <material name="__unnamed_material_5"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust2.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t3">
+    <inertial>
+      <origin xyz="0.014292 0.0143 0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9154e-05" ixy="6.1395e-08" ixz="3.7817e-06" iyy="7.9136e-05" iyz="3.804e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t3.dae"/>
+      </geometry>
+      <material name="__unnamed_material_6"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t3.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust3">
+    <inertial>
+      <origin xyz="-1.62092561595273e-14 2.35644836976689e-14 0.00100000000001926" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.002834249387652"/>
+      <inertia ixx="6.52506444942998e-07" ixy="4.18222517706811e-21" ixz="-6.61744490042422e-23" iyy="6.52506444943007e-07" iyz="-5.29395592033938e-23" izz="1.30312339029424e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust3.dae"/>
+      </geometry>
+      <material name="__unnamed_material_7"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust3.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t4">
+    <inertial>
+      <origin xyz="0.0143 -0.014292 0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9136e-05" ixy="-6.1395e-08" ixz="3.804e-06" iyy="7.9154e-05" iyz="-3.7817e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t4.dae"/>
+      </geometry>
+      <material name="__unnamed_material_8"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t4.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust4">
+    <inertial>
+      <origin xyz="2.66453525910038e-15 2.57155408078802e-14 0.000999999999986345" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.00283424938765204"/>
+      <inertia ixx="6.52506444943016e-07" ixy="-6.89537758624204e-21" ixz="-1.05879118406788e-22" iyy="6.52506444943005e-07" iyz="1.05879118406788e-22" izz="1.30312339029425e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust4.dae"/>
+      </geometry>
+      <material name="__unnamed_material_9"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust4.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t5">
+    <inertial>
+      <origin xyz="0.014292 -0.0143 -0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9154e-05" ixy="-6.1395e-08" ixz="-3.7817e-06" iyy="7.9136e-05" iyz="3.804e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t5.dae"/>
+      </geometry>
+      <material name="__unnamed_material_10"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t5.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust5">
+    <inertial>
+      <origin xyz="-3.99680288865056e-15 -8.46545056276682e-16 0.000999999999998336" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.002834249387652"/>
+      <inertia ixx="6.52506444943002e-07" ixy="-7.00125670464883e-21" ixz="-1.85288457211878e-22" iyy="6.52506444943005e-07" iyz="-1.58818677610181e-22" izz="1.30312339029424e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust5.dae"/>
+      </geometry>
+      <material name="__unnamed_material_11"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust5.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t6">
+    <inertial>
+      <origin xyz="0.0143 0.014292 -0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9136e-05" ixy="6.1395e-08" ixz="-3.804e-06" iyy="7.9154e-05" iyz="-3.7817e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t6.dae"/>
+      </geometry>
+      <material name="__unnamed_material_12"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t6.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust6">
+    <inertial>
+      <origin xyz="-1.99840144432528e-15 1.31838984174237e-15 0.00099999999999012" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.00283424938765201"/>
+      <inertia ixx="6.52506444943003e-07" ixy="-5.9557004103818e-22" ixz="-1.98523347012727e-22" iyy="6.52506444942998e-07" iyz="1.05879118406788e-22" izz="1.30312339029423e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust6.dae"/>
+      </geometry>
+      <material name="__unnamed_material_13"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust6.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t7">
+    <inertial>
+      <origin xyz="-0.014292 0.0143 -0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9154e-05" ixy="-6.1395e-08" ixz="3.7817e-06" iyy="7.9136e-05" iyz="-3.804e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t7.dae"/>
+      </geometry>
+      <material name="__unnamed_material_14"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t7.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust7">
+    <inertial>
+      <origin xyz="1.4210854715202e-14 -1.01862962509358e-14 0.00100000000002154" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.002834249387652"/>
+      <inertia ixx="6.52506444943e-07" ixy="-7.05419626385222e-21" ixz="-1.31157757926408e-20" iyy="6.52506444942999e-07" iyz="1.03496838242635e-20" izz="1.30312339029423e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust7.dae"/>
+      </geometry>
+      <material name="__unnamed_material_15"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust7.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="t8">
+    <inertial>
+      <origin xyz="-0.0143 -0.014292 -0.017717" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.099392"/>
+      <inertia ixx="7.9136e-05" ixy="6.1395e-08" ixz="3.804e-06" iyy="7.9154e-05" iyz="3.7817e-06" izz="7.672e-05"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t8.dae"/>
+      </geometry>
+      <material name="__unnamed_material_16"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/t8.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="thrust8">
+    <inertial>
+      <origin xyz="-4.66293670342566e-15 3.76088049591772e-15 0.00100000000000233" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.00283424938765202"/>
+      <inertia ixx="6.52506444942999e-07" ixy="-6.04834463898774e-21" ixz="-1.45583787809333e-22" iyy="6.52506444943014e-07" iyz="-2.38228016415272e-22" izz="1.30312339029425e-06"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust8.dae"/>
+      </geometry>
+      <material name="__unnamed_material_17"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/thrust8.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="fc">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/fc.dae"/>
+      </geometry>
+      <material name="__unnamed_material_18"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://proto_type_4/meshes/fc.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <joint name="l1" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t1"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="0.109644792463034 0.0969168704014227 -0.281585755800395" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor1" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t1"/>
+    <child link="thrust1"/>
+    <axis xyz="0. 0. 1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="-2.4569 -0.42052999999999996 -0.32175"/>
+  </joint>
+  <joint name="l2" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t2"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="0.10964 -0.096917 -0.28159" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor2" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t2"/>
+    <child link="thrust2"/>
+    <axis xyz=" 0.  0. -1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="-0.68472 -0.42052999999999996 0.32175"/>
+  </joint>
+  <joint name="l3" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t3"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="-0.10964 -0.096917 -0.28159" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor3" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t3"/>
+    <child link="thrust3"/>
+    <axis xyz="0. 0. 1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="-0.68472 0.42052999999999996 -0.32175"/>
+  </joint>
+  <joint name="l4" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t4"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="-0.10964 0.096917 -0.28159" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor4" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t4"/>
+    <child link="thrust4"/>
+    <axis xyz=" 0.  0. -1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.68472 0.42052999999999996 0.32175"/>
+  </joint>
+  <joint name="l5" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t5"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="-0.10964 0.096917 -0.050214" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor5" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t5"/>
+    <child link="thrust5"/>
+    <axis xyz="0. 0. 1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="2.4569 -0.42052999999999996 0.32175"/>
+  </joint>
+  <joint name="l6" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t6"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="-0.10964 -0.096917 -0.050214" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor6" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t6"/>
+    <child link="thrust6"/>
+    <axis xyz=" 0.  0. -1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="-2.4569 -0.42052999999999996 -0.32175"/>
+  </joint>
+  <joint name="l7" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t7"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="0.10964 -0.096917 -0.050214" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor7" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t7"/>
+    <child link="thrust7"/>
+    <axis xyz="0. 0. 1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="-2.4569 0.42052999999999996 0.32175"/>
+  </joint>
+  <joint name="l8" type="fixed">
+    <limit effort="0.0" velocity="0.0" lower="-20.0" upper="20.0"/>
+    <parent link="base_link"/>
+    <child link="t8"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="0.10964 0.096917 -0.050214" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="rotor8" type="continuous">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="t8"/>
+    <child link="thrust8"/>
+    <axis xyz=" 0.  0. -1."/>
+    <origin xyz="0.0 0.0 0.0" rpy="2.4569 0.42052999999999996 -0.32175"/>
+  </joint>
+  <joint name="fc" type="fixed">
+    <limit effort="0.0" velocity="0.0"/>
+    <parent link="base_link"/>
+    <child link="fc"/>
+    <axis xyz="0. 0. 0."/>
+    <origin xyz="0.0159087640700997 -0.0207051311296346 -0.13949999898" rpy="1.5707963267949 -0.0 1.93316031571781"/>
+  </joint>
+  <material name="__unnamed_material_1">
+    <color rgba="0.75294118 0.75294118 0.75294118 1.        "/>
+  </material>
+  <material name="__unnamed_material_2">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_3">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_4">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_5">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_6">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_7">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_8">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_9">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_10">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_11">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_12">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_13">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_14">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_15">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_16">
+    <color rgba="0.79216 0.81961 0.93333 1.     "/>
+  </material>
+  <material name="__unnamed_material_17">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+  <material name="__unnamed_material_18">
+    <color rgba="1. 1. 1. 1."/>
+  </material>
+</robot>
