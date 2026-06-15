@@ -42,7 +42,7 @@
       <link name="base_link">
         <neutrally_buoyant>0</neutrally_buoyant>
         <!-- todo: adjust the volume according to the real robot -->
-        <volume>1</volume> 
+        <volume>0.002</volume> 
         <scaling_volume>1.0</scaling_volume>
         <box>
           <width>0.28</width>
