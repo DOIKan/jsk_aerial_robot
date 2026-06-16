@@ -36,13 +36,13 @@
 
   <gazebo>
     <plugin name="uuv_plugin" filename="libuuv_underwater_object_ros_plugin.so">
-      <fluid_density>0.002</fluid_density>
+      <fluid_density>1000</fluid_density>
       <flow_velocity_topic>/hydrodynamics/current_velocity</flow_velocity_topic>
       <debug>1</debug>
       <link name="base_link">
         <neutrally_buoyant>0</neutrally_buoyant>
         <!-- todo: adjust the volume according to the real robot -->
-        <volume>0.002</volume> 
+        <volume>0.0038</volume> 
         <scaling_volume>1.0</scaling_volume>
         <box>
           <width>0.28</width>
