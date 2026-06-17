@@ -33,12 +33,9 @@ void UUVDController::initialize(ros::NodeHandle nh, ros::NodeHandle nhp,
 
 void UUVDController::controlCore()
 {
-  target_pitch_ = 0.0;
-  target_roll_ = 0.0;
-  navigator_->setTargetPitch(target_pitch_);
-  navigator_->setTargetRoll(target_roll_);
-
   PoseLinearController::controlCore();
+  target_roll_ = target_rpy_.x();
+  target_pitch_ = target_rpy_.y();
 
   tf::Matrix3x3 uav_rot = estimator_->getOrientation(Frame::COG, estimate_mode_);
   tf::Vector3 target_acc_w(pid_controllers_.at(X).result(),

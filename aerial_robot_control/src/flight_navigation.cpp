@@ -194,6 +194,44 @@ void BaseNavigator::naviCallback(const aerial_robot_msgs::FlightNavConstPtr & ms
 
   if(force_att_control_flag_) return;
 
+  /* roll */
+  if(msg->roll_nav_mode == aerial_robot_msgs::FlightNav::POS_MODE)
+    {
+      setTargetRoll(msg->target_roll);
+      setTargetOmegaX(0);
+    }
+  if(msg->roll_nav_mode == aerial_robot_msgs::FlightNav::VEL_MODE)
+    {
+      setTargetOmegaX(msg->target_omega_x);
+      teleop_reset_time_ = teleop_reset_duration_ + ros::Time::now().toSec();
+    }
+  if(msg->roll_nav_mode == aerial_robot_msgs::FlightNav::POS_VEL_MODE)
+    {
+      setTargetRoll(msg->target_roll);
+      setTargetOmegaX(msg->target_omega_x);
+      trajectory_mode_ = true;
+      trajectory_reset_time_ = trajectory_reset_duration_ + ros::Time::now().toSec();
+    }
+
+  /* pitch */
+  if(msg->pitch_nav_mode == aerial_robot_msgs::FlightNav::POS_MODE)
+    {
+      setTargetPitch(msg->target_pitch);
+      setTargetOmegaY(0);
+    }
+  if(msg->pitch_nav_mode == aerial_robot_msgs::FlightNav::VEL_MODE)
+    {
+      setTargetOmegaY(msg->target_omega_y);
+      teleop_reset_time_ = teleop_reset_duration_ + ros::Time::now().toSec();
+    }
+  if(msg->pitch_nav_mode == aerial_robot_msgs::FlightNav::POS_VEL_MODE)
+    {
+      setTargetPitch(msg->target_pitch);
+      setTargetOmegaY(msg->target_omega_y);
+      trajectory_mode_ = true;
+      trajectory_reset_time_ = trajectory_reset_duration_ + ros::Time::now().toSec();
+    }
+
   /* yaw */
   if(msg->yaw_nav_mode == aerial_robot_msgs::FlightNav::POS_MODE)
     {
@@ -1161,4 +1199,3 @@ void BaseNavigator::rosParamInit()
   getParam<double>(bat_nh, "bat_resistance_voltage_rate", bat_resistance_voltage_rate_, 0.0); //Battery internal resistance_voltage_rate
   getParam<double>(bat_nh, "hovering_current", hovering_current_, 0.0); // current at hovering state
 }
-
