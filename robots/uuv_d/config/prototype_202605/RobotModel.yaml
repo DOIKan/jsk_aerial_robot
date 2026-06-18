@@ -1,7 +1,7 @@
 # robot model plugin
 robot_model_plugin_name: multirotor_robot_model
 
-robot_volume: 0.001   # [m^3]
+robot_volume: 0.0038   # [m^3]
 allow_negative_thrust: true
 
 # feasible control configuration
