@@ -295,6 +295,8 @@ namespace aerial_robot_navigation
     tf::Vector3 target_rpy_, target_omega_, target_ang_acc_;
 
     double takeoff_height_;
+    double initial_target_pitch_; //for uuv_d
+    double initial_target_roll_;//for uuv_d
     double init_height_;
     double land_height_;
     double land_descend_vel_;
@@ -428,6 +430,10 @@ namespace aerial_robot_navigation
       setNaviState(START_STATE);
       trajectory_mode_ = false;
       setTargetXyFromCurrentState();
+      setTargetPitch(initial_target_pitch_);
+      setTargetOmegaY(0); 
+      setTargetRoll(initial_target_roll_);
+      setTargetOmegaX(0);
       setTargetPosZ(takeoff_height_);
       setTargetVelZ(0);
       setTargetAccZ(0);

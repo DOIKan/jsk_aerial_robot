@@ -1140,6 +1140,8 @@ void BaseNavigator::rosParamInit()
   ros::NodeHandle nh(nh_, "navigation");
   getParam<int>(nh, "xy_control_mode", xy_control_mode_, 0);
   getParam<double>(nh, "takeoff_height", takeoff_height_, 0.0);
+  getParam<double>(nh, "initial_target_pitch", initial_target_pitch_, 0.0);
+  getParam<double>(nh, "initial_target_roll", initial_target_roll_, 0.0);
 
   getParam<double>(nh, "land_descend_vel",land_descend_vel_, -0.3);
   if (land_descend_vel_ >= 0) {

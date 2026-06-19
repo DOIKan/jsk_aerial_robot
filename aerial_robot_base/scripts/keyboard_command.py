@@ -39,10 +39,10 @@ UUV_D_MSG = """
 uuv_d mode:
 
      u                       i
-(-pitch angle)        (+roll angle)
+(-roll angle)        (+pitch angle)
 
      j                       k
-(+pitch angle)        (-roll angle)
+(+roll angle)        (-pitch angle)
 
      o
 (reset roll/pitch)
@@ -187,13 +187,13 @@ if __name__=="__main__":
                                 nav_msg.roll_nav_mode = FlightNav.POS_MODE
                                 nav_msg.pitch_nav_mode = FlightNav.POS_MODE
                                 if key == 'u':
-                                        target_pitch = applyAngleLimit(target_pitch - rp_angle_step, rp_angle_limit)
-                                if key == 'j':
-                                        target_pitch = applyAngleLimit(target_pitch + rp_angle_step, rp_angle_limit)
-                                if key == 'i':
-                                        target_roll = applyAngleLimit(target_roll + rp_angle_step, rp_angle_limit)
-                                if key == 'k':
                                         target_roll = applyAngleLimit(target_roll - rp_angle_step, rp_angle_limit)
+                                if key == 'j':
+                                        target_roll = applyAngleLimit(target_roll + rp_angle_step, rp_angle_limit)
+                                if key == 'i':
+                                        target_pitch = applyAngleLimit(target_pitch + rp_angle_step, rp_angle_limit)
+                                if key == 'k':
+                                        target_pitch = applyAngleLimit(target_pitch - rp_angle_step, rp_angle_limit)
                                 if key == 'o':
                                         target_roll = 0.0
                                         target_pitch = 0.0

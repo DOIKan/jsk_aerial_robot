@@ -1,6 +1,0 @@
-#!/home/doi/ros/jsk_aerial_robot_ws/src/jsk_aerial_robot/robots/uuv_d/urdf/mesh/proto_type/urdf/.venv/bin/python3
-import sys
-from skrobot.apps.convert_wheel_collision import main
-if __name__ == '__main__':
-    sys.argv[0] = sys.argv[0].removesuffix('.exe')
-    sys.exit(main())

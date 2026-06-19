@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version:   Build Version: 1.6.9305.33219
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="proto_type_5">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.000610809453814865 0.162582918364251 -0.1654384203084"
+        rpy="0 0 0" />
+      <mass
+        value="2.03290862810658" />
+      <inertia
+        ixx="0.0157494672417558"
+        ixy="4.09597593842855E-05"
+        ixz="-4.67703603305006E-11"
+        iyy="0.00862299314586213"
+        iyz="-1.77040423339248E-11"
+        izz="0.0122062172223626" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="t1">
+    <inertial>
+      <origin
+        xyz="-0.0142922441748077 -0.0143000152096667 0.0177167300551074"
+        rpy="0 0 0" />
+      <mass
+        value="0.0993924873704976" />
+      <inertia
+        ixx="7.91541243410576E-05"
+        ixy="6.1394710344996E-08"
+        ixz="-3.7817205620643E-06"
+        iyy="7.91363117743542E-05"
+        iyz="-3.8040185353616E-06"
+        izz="7.67197078218331E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l1"
+    type="fixed">
+    <origin
+      xyz="0.109644792463 0.0969168704010846 -0.281585755800402"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t1" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust1">
+    <inertial>
+      <origin
+        xyz="4.341E-13 1.1256E-12 -0.001"
+        rpy="0 0 0" />
+      <mass
+        value="0.0028342" />
+      <inertia
+        ixx="6.5251E-07"
+        ixy="-3.7984E-21"
+        ixz="-3.8381E-22"
+        iyy="6.5251E-07"
+        iyz="-4.4999E-22"
+        izz="1.3031E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor1"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="-2.4569 -0.42053 -0.32175" />
+    <parent
+      link="t1" />
+    <child
+      link="thrust1" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="t2">
+    <inertial>
+      <origin
+        xyz="-0.0143000152083121 0.0142922441734263 0.0177167300550675"
+        rpy="0 0 0" />
+      <mass
+        value="0.099392487370497" />
+      <inertia
+        ixx="7.91363117743929E-05"
+        ixy="-6.13947103527403E-08"
+        ixz="-3.80401853537244E-06"
+        iyy="7.91541243410998E-05"
+        iyz="3.78172056207492E-06"
+        izz="7.67197078218827E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l2"
+    type="fixed">
+    <origin
+      xyz="0.10964 -0.096917 -0.28159"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t2" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust2">
+    <inertial>
+      <origin
+        xyz="-4.5031E-13 -1.1389E-12 0.001"
+        rpy="0 0 0" />
+      <mass
+        value="0.0028342" />
+      <inertia
+        ixx="6.5251E-07"
+        ixy="5.7836E-21"
+        ixz="2.647E-23"
+        iyy="6.5251E-07"
+        iyz="-3.4411E-22"
+        izz="1.3031E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor2"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="-0.68472 -0.42053 0.32175" />
+    <parent
+      link="t2" />
+    <child
+      link="thrust2" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="t3">
+    <inertial>
+      <origin
+        xyz="0.014292244174808 0.0143000152068432 0.0177167300551437"
+        rpy="0 0 0" />
+      <mass
+        value="0.099392487370502" />
+      <inertia
+        ixx="7.91541243411461E-05"
+        ixy="6.1394710360004E-08"
+        ixz="3.78172056208685E-06"
+        iyy="7.91363117744406E-05"
+        iyz="3.80401853538433E-06"
+        izz="7.67197078219415E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l3"
+    type="fixed">
+    <origin
+      xyz="-0.10964 -0.096917 -0.28159"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t3" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust3">
+    <inertial>
+      <origin
+        xyz="3.65929508916452E-13 -1.19872167747559E-12 0.000999999999298007"
+        rpy="0 0 0" />
+      <mass
+        value="0.00283424938765202" />
+      <inertia
+        ixx="6.52506444943008E-07"
+        ixy="1.40289831888993E-21"
+        ixz="-2.38228016415272E-22"
+        iyy="6.52506444943005E-07"
+        iyz="7.94093388050907E-23"
+        izz="1.30312339029424E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor3"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="-0.68472 0.42053 -0.32175" />
+    <parent
+      link="t3" />
+    <child
+      link="thrust3" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="t4">
+    <inertial>
+      <origin
+        xyz="0.0143000152083128 -0.0142922441762693 0.017716730055045"
+        rpy="0 0 0" />
+      <mass
+        value="0.0993924873704986" />
+      <inertia
+        ixx="7.91363117743514E-05"
+        ixy="-6.13947103452402E-08"
+        ixz="3.80401853536186E-06"
+        iyy="7.91541243410573E-05"
+        iyz="-3.78172056206365E-06"
+        izz="7.67197078218372E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l4"
+    type="fixed">
+    <origin
+      xyz="-0.10964 0.096917 -0.28159"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t4" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust4">
+    <inertial>
+      <origin
+        xyz="-3.60711460700713E-13 -1.19552978627979E-12 0.00100000000069372"
+        rpy="0 0 0" />
+      <mass
+        value="0.00283424938765201" />
+      <inertia
+        ixx="6.52506444943004E-07"
+        ixy="1.53524721689842E-21"
+        ixz="-3.70576914423756E-22"
+        iyy="6.52506444943001E-07"
+        iyz="1.05879118406788E-22"
+        izz="1.30312339029424E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor4"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0.68472 0.42053 0.32175" />
+    <parent
+      link="t4" />
+    <child
+      link="thrust4" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="t5">
+    <inertial>
+      <origin
+        xyz="0.0142922441747572 -0.0143000152091604 -0.0177167300546501"
+        rpy="0 0 0" />
+      <mass
+        value="0.0993924873704979" />
+      <inertia
+        ixx="7.91541243410934E-05"
+        ixy="-6.13947103527992E-08"
+        ixz="-3.78172056207648E-06"
+        iyy="7.91363117743883E-05"
+        iyz="3.80401853537312E-06"
+        izz="7.67197078218795E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l5"
+    type="fixed">
+    <origin
+      xyz="-0.10964 0.096917 -0.050214"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t5" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust5">
+    <inertial>
+      <origin
+        xyz="-1.46216372343133E-13 9.7875874072173E-13 0.00100000000008169"
+        rpy="0 0 0" />
+      <mass
+        value="0.00283424938765203" />
+      <inertia
+        ixx="6.52506444943012E-07"
+        ixy="7.6762360844921E-22"
+        ixz="1.58818677610181E-22"
+        iyy="6.52506444943006E-07"
+        iyz="3.17637355220363E-22"
+        izz="1.30312339029425E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor5"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="2.4569 -0.42053 0.32175" />
+    <parent
+      link="t5" />
+    <child
+      link="thrust5" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="t6">
+    <inertial>
+      <origin
+        xyz="0.0143000152083608 0.014292244173953 -0.0177167300555377"
+        rpy="0 0 0" />
+      <mass
+        value="0.0993924873704977" />
+      <inertia
+        ixx="7.91363117744056E-05"
+        ixy="6.13947103555434E-08"
+        ixz="-3.80401853537721E-06"
+        iyy="7.91541243411116E-05"
+        iyz="-3.78172056208147E-06"
+        izz="7.67197078219017E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l6"
+    type="fixed">
+    <origin
+      xyz="-0.10964 -0.096917 -0.050214"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t6" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust6">
+    <inertial>
+      <origin
+        xyz="1.49213974509621E-13 9.80743264378248E-13 0.000999999999907408"
+        rpy="0 0 0" />
+      <mass
+        value="0.00283424938765203" />
+      <inertia
+        ixx="6.52506444943008E-07"
+        ixy="-1.6675961149069E-21"
+        ixz="1.32348898008484E-22"
+        iyy="6.52506444943007E-07"
+        iyz="0"
+        izz="1.30312339029425E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor6"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="-2.4569 -0.42053 -0.32175" />
+    <parent
+      link="t6" />
+    <child
+      link="thrust6" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="t7">
+    <inertial>
+      <origin
+        xyz="-0.0142922441747535 0.0143000152075655 -0.0177167300555658"
+        rpy="0 0 0" />
+      <mass
+        value="0.0993924873704991" />
+      <inertia
+        ixx="7.91541243411076E-05"
+        ixy="-6.13947103534102E-08"
+        ixz="3.78172056207879E-06"
+        iyy="7.91363117744045E-05"
+        iyz="-3.80401853537503E-06"
+        izz="7.67197078218991E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t7.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l7"
+    type="fixed">
+    <origin
+      xyz="0.10964 -0.096917 -0.050214"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t7" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust7">
+    <inertial>
+      <origin
+        xyz="6.28386231937839E-14 8.51013703950798E-13 0.000999999999931722"
+        rpy="0 0 0" />
+      <mass
+        value="0.00283424938765203" />
+      <inertia
+        ixx="6.52506444943009E-07"
+        ixy="4.16899028726726E-21"
+        ixz="-4.76456032830544E-22"
+        iyy="6.52506444943004E-07"
+        iyz="-1.58818677610181E-22"
+        izz="1.30312339029425E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust7.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor7"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="-2.4569 0.42053 0.32175" />
+    <parent
+      link="t7" />
+    <child
+      link="thrust7" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="t8">
+    <inertial>
+      <origin
+        xyz="-0.0143000152083657 -0.014292244175563 -0.0177167300546265"
+        rpy="0 0 0" />
+      <mass
+        value="0.099392487370502" />
+      <inertia
+        ixx="7.91363117744156E-05"
+        ixy="6.13947103564349E-08"
+        ixz="3.80401853537694E-06"
+        iyy="7.91541243411207E-05"
+        iyz="3.78172056208213E-06"
+        izz="7.67197078219053E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t8.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/t8.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l8"
+    type="fixed">
+    <origin
+      xyz="0.10964 0.096917 -0.050214"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="t8" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-20"
+      upper="20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="thrust8">
+    <inertial>
+      <origin
+        xyz="-5.89528426075958E-14 8.60519988599151E-13 0.00100000000007405"
+        rpy="0 0 0" />
+      <mass
+        value="0.00283424938765205" />
+      <inertia
+        ixx="6.5250644494302E-07"
+        ixy="1.7205356741103E-22"
+        ixz="-1.58818677610181E-22"
+        iyy="6.52506444943011E-07"
+        iyz="6.08804930839028E-22"
+        izz="1.30312339029426E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust8.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/thrust8.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotor8"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="2.4569 0.42053 -0.32175" />
+    <parent
+      link="t8" />
+    <child
+      link="thrust8" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="fc">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/fc.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://proto_type_5/meshes/fc.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fc"
+    type="fixed">
+    <origin
+      xyz="0.00704662191902883 0.00267140409614365 -0.114499999725"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="fc" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
