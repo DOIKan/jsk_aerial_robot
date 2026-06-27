@@ -10,7 +10,7 @@ navigation:
 
   takeoff_height: -5.0
   outdoor_takeoff_height: 1.5
-  initial_target_pitch: -1
+  initial_target_pitch: -1.2
   initial_target_roll: 0.0
 
 

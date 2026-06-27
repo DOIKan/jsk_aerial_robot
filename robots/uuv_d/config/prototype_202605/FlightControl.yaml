@@ -2,7 +2,7 @@ aerial_robot_control_name: aerial_robot_control/uuv_d_controller
 
 controller:
   xy:
-    p_gain: 8.0
+    p_gain: 7.0
     i_gain: 1.0
     d_gain: 5.0
     limit_sum: 4.0
@@ -11,7 +11,7 @@ controller:
     limit_d: 20.0
 
   z:
-    p_gain: 8.0
+    p_gain: 6.0
     i_gain: 1.0
     d_gain: 5.0
     limit_err_p: 20.0
@@ -22,9 +22,9 @@ controller:
     force_landing_descending_rate: -0.5
   
   roll_pitch:
-    p_gain: 2.0
+    p_gain: 3.0
     i_gain: 0.0
-    d_gain: 0.2
+    d_gain: 0.9
     limit_sum: 50.0
     limit_p: 50.0
     limit_i: 50.0
@@ -34,9 +34,9 @@ controller:
 
 
   yaw:
-    p_gain: 8.0
+    p_gain: 5.0
     i_gain: 2.0
-    d_gain: 0.1
+    d_gain: 0.9
     limit_err_p: 20
     limit_sum: 20.0
     limit_p: 30
