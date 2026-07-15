@@ -42,14 +42,14 @@
       <link name="base_link">
         <neutrally_buoyant>0</neutrally_buoyant>
         <!-- todo: adjust the volume according to the real robot -->
-        <volume>0.0038</volume> 
+        <volume>0.0037</volume> 
         <scaling_volume>1.0</scaling_volume>
         <box>
           <width>0.28</width>
           <length>0.28</length>
           <height>0.072</height>
         </box>
-        <center_of_buoyancy>0 0 0</center_of_buoyancy>
+        <center_of_buoyancy>0.000610809453814865 0 -0.1655</center_of_buoyancy>
         <hydrodynamic_model>
           <type>fossen</type>
           <added_mass>

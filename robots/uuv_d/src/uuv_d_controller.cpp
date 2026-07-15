@@ -29,8 +29,39 @@ void UUVDController::initialize(ros::NodeHandle nh, ros::NodeHandle nhp,
   rpy_gain_pub_ = nh_.advertise<spinal::RollPitchYawTerms>("rpy/gain", 1);
   flight_cmd_pub_ = nh_.advertise<spinal::FourAxisCommand>("four_axes/command", 1);
   torque_allocation_matrix_inv_pub_ = nh_.advertise<spinal::TorqueAllocationMatrixInv>("torque_allocation_matrix_inv", 1);
+  debug_wrench_pubs_.resize(motor_num_);
+  for (int i = 0; i < motor_num_; i++)
+  {
+    // トピック名を "motor_0/wrench", "motor_1/wrench" のように設定
+    std::string topic_name = "motor_" + std::to_string(i) + "/wrench";
+    debug_wrench_pubs_.at(i) = nh_.advertise<geometry_msgs::WrenchStamped>(topic_name, 1);
+  }
 }
+void UUVDController::publishDebugWrench()
+{
+  for (int i = 0; i < motor_num_; i++)
+  {
+    geometry_msgs::WrenchStamped wrench_msg;
+    
+    // ヘッダー情報の設定
+    wrench_msg.header.stamp = ros::Time::now();
+    // ※注意：ここのフレーム名はURDF/TFツリーで定義されているモーターのリンク名と完全に一致させる必要があります。
+    wrench_msg.header.frame_id = "uuv_d/thrust" + std::to_string(i+1); 
 
+    // 力の設定（Z軸方向に推力が発生すると仮定）
+    wrench_msg.wrench.force.x = 0.0;
+    wrench_msg.wrench.force.y = 0.0;
+    wrench_msg.wrench.force.z = target_base_thrust_.at(i);
+
+    // トルクの設定（反トルクも可視化したい場合はZ軸に値を入れますが、今回は推力のみとします）
+    wrench_msg.wrench.torque.x = 0.0;
+    wrench_msg.wrench.torque.y = 0.0;
+    wrench_msg.wrench.torque.z = 0.0;
+
+    // 配信
+    debug_wrench_pubs_.at(i).publish(wrench_msg);
+  }
+}
 void UUVDController::controlCore()
 {
   PoseLinearController::controlCore();
@@ -92,6 +123,7 @@ void UUVDController::sendCmd()
 
   sendFourAxisCommand();
   sendTorqueAllocationMatrixInv();
+  publishDebugWrench();
   
 }
 

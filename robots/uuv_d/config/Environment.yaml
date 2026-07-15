@@ -6,7 +6,7 @@ environment:
   buoyancy:
     enabled: false
     rho_water: 1000.0
-    submerged_ratio: 0.0    # 0: air, 1: water
+    submerged_ratio: 0.0   # 0: air, 1: water
 
   drag:
     enabled: true

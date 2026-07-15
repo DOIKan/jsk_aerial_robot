@@ -37,5 +37,8 @@ private:
   void sendFourAxisCommand();
   void sendTorqueAllocationMatrixInv();
   void setAttitudeGains();
+
+  std::vector<ros::Publisher> debug_wrench_pubs_;
+  void publishDebugWrench();
 };
 }  // namespace aerial_robot_control
