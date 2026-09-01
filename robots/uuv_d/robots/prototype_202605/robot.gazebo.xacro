@@ -15,7 +15,7 @@
     <gazebo reference="${link}">
       <ambient>${rgba}</ambient>
       <diffuse>${rgba}</diffuse>
-      <specular>0.3 0.3 0.3 1.0</specular>
+      <specular>0.75 1.0 0.2 1.0</specular>
       <emissive>${emissive}</emissive>
     </gazebo>
   </xacro:macro>
