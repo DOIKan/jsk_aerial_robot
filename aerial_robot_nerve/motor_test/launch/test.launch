@@ -6,6 +6,7 @@
   <arg name="pwm_incremental_value" default="25" />
   <arg name="min_pwm_value" default="1200" />
   <arg name="max_pwm_value" default="1700" />
+  <arg name="motor_index" default="0" />
   <!-- parameters for oneshot -->
   <arg name="raise_duration" default="2.0" />
   <arg name="brake_duration" default="4.0" />
@@ -31,6 +32,7 @@
     <param name="pwm_incremental_value" value="$(arg pwm_incremental_value)" />
     <param name="min_pwm_value" value="$(arg min_pwm_value)" />
     <param name="max_pwm_value" value="$(arg max_pwm_value)" />
+    <param name="motor_index" value="$(arg motor_index)" />
     <param name="raise_duration" value="$(arg raise_duration)" />
     <param name="brake_duration" value="$(arg brake_duration)" />
   </node>

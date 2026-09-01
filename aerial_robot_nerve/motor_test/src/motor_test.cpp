@@ -14,6 +14,11 @@ namespace Mode
   enum {STEP = 0, ONESHOT = 1,};
 };
 
+namespace
+{
+  const int MAX_DIRECT_PWM_OUTPUTS = 8;
+}
+
 class MotorTest
 {
 public:
@@ -27,8 +32,14 @@ public:
     nhp_.param("min_pwm_value", min_pwm_value_, 1100);
     nhp_.param("max_pwm_value", max_pwm_value_, 1950);
 
-    nhp_.param("stop_pwm_value", stop_pwm_value_, 1000);
+    nhp_.param("stop_pwm_value", stop_pwm_value_, 1500);
     nhp_.param("pwm_range", pwm_range_, 2000.0);
+    nhp_.param("motor_index", motor_index_, 0);
+    if(motor_index_ < 0 || motor_index_ >= MAX_DIRECT_PWM_OUTPUTS)
+      {
+        ROS_ERROR("Invalid motor_index: %d. Use 0 - %d. Fallback to 0.", motor_index_, MAX_DIRECT_PWM_OUTPUTS - 1);
+        motor_index_ = 0;
+      }
 
     /* one-shot mode */
     nhp_.param("raise_duration", raise_duration_, 1.0);
@@ -81,6 +92,7 @@ private:
   uint16_t pwm_value_;
 
   int test_mode_;
+  int motor_index_;
   bool start_flag_;
   bool once_flag_;
   double run_duration_;
@@ -94,6 +106,14 @@ private:
 
   std::ofstream ofs_;
 
+  void publishPwmValue(const int pwm_value)
+  {
+    spinal::PwmTest cmd_msg;
+    cmd_msg.motor_index.push_back(static_cast<uint8_t>(motor_index_));
+    cmd_msg.pwms.push_back(pwm_value / pwm_range_);
+    motor_pwm_pub_.publish(cmd_msg);
+  }
+
   void startCallback(const std_msgs::EmptyConstPtr & msg)
   {
     std::string file_name  = std::string("motor_test_") + std::to_string((int)ros::Time::now().toSec()) + std::string(".txt");
@@ -101,11 +121,9 @@ private:
 
     pwm_value_ = min_pwm_value_;
 
-    spinal::PwmTest cmd_msg;
-    cmd_msg.pwms.push_back(pwm_value_  / pwm_range_);
-    motor_pwm_pub_.publish(cmd_msg);
+    publishPwmValue(pwm_value_);
     init_time_ = ros::Time::now();
-    ROS_INFO("start pwm test");
+    ROS_INFO("start pwm test: motor_index=%d", motor_index_);
     start_flag_ = true;
   }
 
@@ -171,9 +189,7 @@ private:
               {
                 if(once_flag_)
                   {
-                    spinal::PwmTest cmd_msg;
-                    cmd_msg.pwms.push_back(stop_pwm_value_  / pwm_range_);
-                    motor_pwm_pub_.publish(cmd_msg);
+                    publishPwmValue(stop_pwm_value_);
                     once_flag_ = false;
                     ROS_WARN("STOP");
                     return;
@@ -207,9 +223,7 @@ private:
         if(pwm_value_ > max_pwm_value_)
           {
             start_flag_ = false;
-            spinal::PwmTest cmd_msg;
-            cmd_msg.pwms.push_back(stop_pwm_value_  / pwm_range_);
-            motor_pwm_pub_.publish(cmd_msg);
+            publishPwmValue(stop_pwm_value_);
 
             ROS_WARN("finish pwm test");
             ofs_ << "done" << std::endl;
@@ -220,10 +234,8 @@ private:
 
         if(once_flag_)
           {
-            ROS_INFO("target_pwm: %d", pwm_value_);
-            spinal::PwmTest cmd_msg;
-            cmd_msg.pwms.push_back(pwm_value_  / pwm_range_);
-            motor_pwm_pub_.publish(cmd_msg);
+            ROS_INFO("target_pwm: %d, motor_index: %d", pwm_value_, motor_index_);
+            publishPwmValue(pwm_value_);
           }
       }
   }
