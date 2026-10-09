@@ -45,3 +45,15 @@ controller:
     limit_d: 20.0
 
     need_d_control: false # yaw D feedback is applied on Spinal
+
+  # output rate limit per control cycle
+  max_gimbal_angle_step: 0.05 # [rad]
+  max_thrust_step: 0.5 # [N]
+
+  # gimbal angle selection
+  gimbal_branch_tolerance: 0.2 # [rad] allowed force direction error caused by the gimbal joint limit
+  gimbal_internal_force: [-3.0, 0.0, 0.0, -3.0] # [N] internal z force per gimbal rotor (null space only), all 0 to disable
+
+  # thrust re-allocation with measured gimbal angles
+  thrust_torque_weight: 10.0 # weight of torque against force
+  thrust_anchor_weight: 0.1 # pull toward the thrusts of the angle allocation

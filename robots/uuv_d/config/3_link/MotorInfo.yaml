@@ -2,7 +2,7 @@ motor_info:
         # min_pwm: 0.58 # original one-way rotor setting
         min_pwm: 0.50 # for virtual birotate motor in underwater simulation
         max_pwm: 1.00
-        min_thrust: 20 #[N]
+        min_thrust: -20 #[N]
         force_landing_thrust: 0.5 #[N]
         speed_rate: 0.0
         m_f_rate: -0.02

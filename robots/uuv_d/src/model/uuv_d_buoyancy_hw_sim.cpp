@@ -89,6 +89,21 @@ public:
 
   void writeSim(ros::Time time, ros::Duration period) override
   {
+    // a non-finite force never recovers through RotorHandle's filter and is skipped silently; restore the last finite one
+    last_finite_forces_.resize(rotor_n_dof_, 0.0);
+    for (unsigned int j = 0; j < rotor_n_dof_; ++j)
+    {
+      hardware_interface::RotorHandle rotor = spinal_interface_.getHandle(sim_rotors_.at(j)->GetName());
+      if (std::isfinite(rotor.getForce()))
+      {
+        last_finite_forces_.at(j) = rotor.getForce();
+        continue;
+      }
+      ROS_ERROR_THROTTLE(1.0, "[BuoyancyHWSim] non-finite force on %s at %.3f; use last finite force %.3f",
+                         rotor.getName().c_str(), time.toSec(), last_finite_forces_.at(j));
+      rotor.setForce(last_finite_forces_.at(j), true);
+    }
+
     AerialRobotHWSim::writeSim(time, period);
     if (!enabled_ || control_mode_ != FORCE_CONTROL_MODE)
       return;
@@ -153,6 +168,7 @@ private:
   ros::Time last_debug_time_;
   std::string frame_prefix_;
   std::vector<LinkBuoyancy> links_;
+  std::vector<double> last_finite_forces_;
   tf::TransformBroadcaster broadcaster_;
 };
 
