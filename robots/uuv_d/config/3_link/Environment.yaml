@@ -1,4 +1,60 @@
 environment:
+  # Fully submerged 3_link simulation. Used by both buoyancy and hydrodynamics.
+  hydrodynamics:
+    enabled: true
+    acceleration_filter_alpha: 0.3
+    debug_rate: 20.0
+    current_velocity_world: [0.0, 0.0, 0.0] # Gazebo world frame, m/s
+    # Rows and columns: [u, v, w, p, q, r] in each link frame, at its origin.
+    # Use positive added-mass coefficients: fluid inertia applies -M_A * acceleration.
+    # Use positive resisting coefficients: drag is -K_2 * [u|u|, v|v|, w|w|, p|p|, q|q|, r|r|].
+    # Replace the zero matrices with measured coefficients before evaluating dynamics.
+    links:
+      link1:
+        added_mass:
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+        quadratic_drag:
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+      link2:
+        added_mass:
+          - [1.25, 0, 0, 0, 0, 0]
+          - [0, 4.68, 0, 0, 0, 0]
+          - [0, 0, 4.771, 0, 0, 0]
+          - [0, 0, 0, 0.123, 0, 0]
+          - [0, 0, 0, 0, 0.381, 0]
+          - [0, 0, 0, 0, 0, 0.400]
+        quadratic_drag:
+          - [5.8, 0, 0, 0, 0, 0]
+          - [0, 21.9, 0, 0, 0, 0]
+          - [0, 0, 28.0, 0, 0, 0]
+          - [0, 0, 0, 0.000186, 0, 0]
+          - [0, 0, 0, 0, 0.000719, 0]
+          - [0, 0, 0, 0, 0, 0.001120]
+      link3:
+        added_mass:
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+        quadratic_drag:
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
   buoyancy:
     enabled: false
     per_link_enabled: true

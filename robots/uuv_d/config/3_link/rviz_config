@@ -71,6 +71,27 @@ Visualization Manager:
     - Class: rviz/WrenchStamped
       Enabled: true
       Force Arrow Scale: 0.2
+      Force Color: 0; 220; 0
+      Torque Color: 0; 220; 0
+      Name: Fluid drag link1
+      Topic: /uuv_d/debug/drag_wrench/link1
+    - Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 0.2
+      Force Color: 0; 220; 0
+      Torque Color: 0; 220; 0
+      Name: Fluid drag link2
+      Topic: /uuv_d/debug/drag_wrench/link2
+    - Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 0.2
+      Force Color: 0; 220; 0
+      Torque Color: 0; 220; 0
+      Name: Fluid drag link3
+      Topic: /uuv_d/debug/drag_wrench/link3
+    - Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 0.2
       Force Color: 68; 204; 68
       Name: Motor1
       Topic: /uuv_d/motor_0/wrench
