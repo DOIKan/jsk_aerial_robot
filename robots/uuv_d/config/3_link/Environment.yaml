@@ -2,6 +2,7 @@ environment:
   # Fully submerged 3_link simulation. Used by both buoyancy and hydrodynamics.
   hydrodynamics:
     enabled: true
+    controller_compensation_enabled: true
     acceleration_filter_alpha: 0.3
     debug_rate: 20.0
     current_velocity_world: [0.0, 0.0, 0.0] # Gazebo world frame, m/s

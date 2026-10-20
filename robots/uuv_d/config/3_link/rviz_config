@@ -92,6 +92,13 @@ Visualization Manager:
     - Class: rviz/WrenchStamped
       Enabled: true
       Force Arrow Scale: 0.2
+      Force Color: 230; 180; 0
+      Torque Color: 230; 180; 0
+      Name: Hydrodynamic compensation
+      Topic: /uuv_d/debug/hydrodynamic_compensation_wrench
+    - Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 0.2
       Force Color: 68; 204; 68
       Name: Motor1
       Topic: /uuv_d/motor_0/wrench

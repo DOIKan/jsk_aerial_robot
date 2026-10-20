@@ -7,6 +7,7 @@
 #include <spinal/TorqueAllocationMatrixInv.h>
 #include <sensor_msgs/JointState.h>// add gimbal joint state
 #include <angles/angles.h>
+#include <Eigen/Geometry>
 #include <algorithm>
 
 namespace aerial_robot_control
@@ -70,6 +71,27 @@ private:
   bool per_link_buoyancy_enabled_;
   double rho_water_;
   double submerged_ratio_;
+
+  using Vector6 = Eigen::Matrix<double, 6, 1>;
+  using Matrix6 = Eigen::Matrix<double, 6, 6>;
+  struct HydrodynamicLink
+  {
+    std::string name;
+    Matrix6 added_mass;
+    Matrix6 quadratic_drag;
+    Eigen::Vector3d previous_origin_cog = Eigen::Vector3d::Zero();
+    Eigen::Matrix3d previous_rotation_cog = Eigen::Matrix3d::Identity();
+    ros::Time previous_time;
+  };
+  bool hydrodynamic_compensation_enabled_ = false;
+  Eigen::Vector3d current_velocity_world_ = Eigen::Vector3d::Zero();
+  std::vector<HydrodynamicLink> hydrodynamic_links_;
+  Vector6 hydrodynamic_compensation_wrench_ = Vector6::Zero();
+  ros::Publisher hydrodynamic_compensation_pub_;
+  bool loadHydrodynamicCompensation();
+  Vector6 computeHydrodynamicCompensation(const tf::Matrix3x3& cog_rotation,
+                                          const tf::Vector3& target_acceleration_cog);
+  void publishHydrodynamicCompensationWrench();
 
   int gimbal_motor_num_;
   int fixed_motor_num_;

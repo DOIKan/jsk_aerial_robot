@@ -24,6 +24,44 @@ bool xmlRpcNumber(const XmlRpc::XmlRpcValue& value, double& result)
     return false;
   return std::isfinite(result);
 }
+
+bool xmlRpcMatrix6(const XmlRpc::XmlRpcValue& value, Eigen::Matrix<double, 6, 6>& matrix)
+{
+  if (value.getType() != XmlRpc::XmlRpcValue::TypeArray || value.size() != 6)
+    return false;
+  for (int row = 0; row < 6; ++row)
+  {
+    if (value[row].getType() != XmlRpc::XmlRpcValue::TypeArray || value[row].size() != 6)
+      return false;
+    for (int col = 0; col < 6; ++col)
+      if (!xmlRpcNumber(value[row][col], matrix(row, col)))
+        return false;
+  }
+  return true;
+}
+
+Eigen::Vector3d eigenVector(const tf::Vector3& vector)
+{
+  return Eigen::Vector3d(vector.x(), vector.y(), vector.z());
+}
+
+Eigen::Matrix3d eigenRotation(const tf::Matrix3x3& rotation)
+{
+  Eigen::Matrix3d result;
+  for (int row = 0; row < 3; ++row)
+    for (int col = 0; col < 3; ++col)
+      result(row, col) = rotation[row][col];
+  return result;
+}
+
+Eigen::Matrix3d eigenRotation(const KDL::Rotation& rotation)
+{
+  Eigen::Matrix3d result;
+  for (int row = 0; row < 3; ++row)
+    for (int col = 0; col < 3; ++col)
+      result(row, col) = rotation(row, col);
+  return result;
+}
 }
 UUVDMultilinkController::UUVDMultilinkController()
   : PoseLinearController(),
@@ -105,6 +143,7 @@ void UUVDMultilinkController::initialize(ros::NodeHandle nh, ros::NodeHandle nhp
       if (!per_link_buoyancy_enabled_) buoyancy_links_.clear();
     }
   }
+  loadHydrodynamicCompensation();
   robot_model_for_control_ = boost::make_shared<uuv_d_model::UUVDMultilinkRobotModel>();
 
   q_mat_.resize(4, motor_num_);
@@ -160,6 +199,8 @@ void UUVDMultilinkController::initialize(ros::NodeHandle nh, ros::NodeHandle nhp
   flight_cmd_pub_ = nh_.advertise<spinal::FourAxisCommand>("four_axes/command", 1);
   torque_allocation_matrix_inv_pub_ = nh_.advertise<spinal::TorqueAllocationMatrixInv>("torque_allocation_matrix_inv", 1);
   gravity_wrench_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>("debug/gravity_wrench", 1);
+  hydrodynamic_compensation_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>(
+    "debug/hydrodynamic_compensation_wrench", 1);
   gimbal_control_pub_ = nh_.advertise<sensor_msgs::JointState>("gimbals_ctrl", 1);
   debug_wrench_pubs_.resize(motor_num_);
   for (int i = 0; i < motor_num_; i++)
@@ -213,6 +254,181 @@ void UUVDMultilinkController::publishGravityWrench()
   wrench_msg.wrench.torque.z = 0.0;
   gravity_wrench_pub_.publish(wrench_msg);
 }
+
+bool UUVDMultilinkController::loadHydrodynamicCompensation()
+{
+  ros::NodeHandle hydro_nh(nh_, "environment/hydrodynamics");
+  bool hydrodynamics_enabled = false;
+  hydro_nh.param("enabled", hydrodynamics_enabled, false);
+  hydro_nh.param("controller_compensation_enabled", hydrodynamic_compensation_enabled_, false);
+  hydrodynamic_compensation_enabled_ &= hydrodynamics_enabled;
+  if (!hydrodynamic_compensation_enabled_)
+    return true;
+
+  XmlRpc::XmlRpcValue current;
+  XmlRpc::XmlRpcValue links;
+  if (!hydro_nh.getParam("current_velocity_world", current) ||
+      current.getType() != XmlRpc::XmlRpcValue::TypeArray || current.size() != 3 ||
+      !xmlRpcNumber(current[0], current_velocity_world_[0]) ||
+      !xmlRpcNumber(current[1], current_velocity_world_[1]) ||
+      !xmlRpcNumber(current[2], current_velocity_world_[2]) ||
+      !hydro_nh.getParam("links", links) ||
+      links.getType() != XmlRpc::XmlRpcValue::TypeStruct)
+  {
+    ROS_ERROR("[UUVDMultilinkController] Invalid hydrodynamics current or links configuration");
+    hydrodynamic_compensation_enabled_ = false;
+    return false;
+  }
+
+  for (auto it = links.begin(); it != links.end(); ++it)
+  {
+    const XmlRpc::XmlRpcValue& config = it->second;
+    HydrodynamicLink link;
+    link.name = it->first;
+    if (config.getType() != XmlRpc::XmlRpcValue::TypeStruct ||
+        !config.hasMember("added_mass") || !config.hasMember("quadratic_drag") ||
+        !xmlRpcMatrix6(config["added_mass"], link.added_mass) ||
+        !xmlRpcMatrix6(config["quadratic_drag"], link.quadratic_drag))
+    {
+      ROS_ERROR("[UUVDMultilinkController] Invalid 6x6 hydrodynamics matrices for %s", link.name.c_str());
+      hydrodynamic_links_.clear();
+      hydrodynamic_compensation_enabled_ = false;
+      return false;
+    }
+    for (int axis = 0; axis < 6; ++axis)
+      if (link.quadratic_drag(axis, axis) < 0.0)
+      {
+        ROS_ERROR("[UUVDMultilinkController] Negative quadratic drag diagonal for %s axis %d",
+                  link.name.c_str(), axis);
+        hydrodynamic_links_.clear();
+        hydrodynamic_compensation_enabled_ = false;
+        return false;
+      }
+    hydrodynamic_links_.push_back(link);
+  }
+  if (hydrodynamic_links_.empty())
+  {
+    ROS_ERROR("[UUVDMultilinkController] No hydrodynamics links configured");
+    hydrodynamic_compensation_enabled_ = false;
+    return false;
+  }
+  ROS_INFO("[UUVDMultilinkController] Hydrodynamic feedforward enabled for %zu links",
+           hydrodynamic_links_.size());
+  return true;
+}
+
+UUVDMultilinkController::Vector6 UUVDMultilinkController::computeHydrodynamicCompensation(
+  const tf::Matrix3x3& cog_rotation, const tf::Vector3& target_acceleration_cog)
+{
+  Vector6 compensation = Vector6::Zero();
+  if (!hydrodynamic_compensation_enabled_ || !uuv_d_robot_model_)
+    return compensation;
+
+  const Eigen::Matrix3d world_from_cog = eigenRotation(cog_rotation);
+  const Eigen::Vector3d cog_velocity = world_from_cog.transpose() * eigenVector(vel_);
+  const Eigen::Vector3d cog_omega = eigenVector(omega_);
+  const Eigen::Vector3d target_acceleration = eigenVector(target_acceleration_cog);
+  tf::Matrix3x3 target_rotation;
+  target_rotation.setRPY(target_rpy_.x(), target_rpy_.y(), target_rpy_.z());
+  const Eigen::Vector3d target_angular_acceleration =
+    eigenVector(cog_rotation.inverse() * target_rotation * target_ang_acc_);
+  const Eigen::Vector3d current_cog = world_from_cog.transpose() * current_velocity_world_;
+  if (!cog_velocity.allFinite() || !cog_omega.allFinite() ||
+      !target_acceleration.allFinite() || !target_angular_acceleration.allFinite())
+  {
+    ROS_ERROR_THROTTLE(1.0, "[UUVDMultilinkController] Invalid state for hydrodynamic feedforward");
+    return compensation;
+  }
+
+  const auto segment_frames = uuv_d_robot_model_->getSegmentsTf();
+  const KDL::Frame cog = uuv_d_robot_model_->getCog<KDL::Frame>();
+  const ros::Time now = ros::Time::now();
+  const double ratio = std::clamp(submerged_ratio_, 0.0, 1.0);
+  for (auto& link : hydrodynamic_links_)
+  {
+    const auto segment = segment_frames.find(link.name);
+    if (segment == segment_frames.end())
+    {
+      ROS_ERROR_THROTTLE(1.0, "[UUVDMultilinkController] Missing hydrodynamics link %s", link.name.c_str());
+      continue;
+    }
+    const KDL::Frame cog_to_link = cog.Inverse() * segment->second;
+    const Eigen::Vector3d origin_cog(cog_to_link.p.x(), cog_to_link.p.y(), cog_to_link.p.z());
+    const Eigen::Matrix3d cog_from_link = eigenRotation(cog_to_link.M);
+    Eigen::Vector3d relative_linear_velocity = Eigen::Vector3d::Zero();
+    Eigen::Vector3d relative_angular_velocity = Eigen::Vector3d::Zero();
+    if (!link.previous_time.isZero())
+    {
+      const double dt = (now - link.previous_time).toSec();
+      if (dt > 1e-4 && dt < 0.2)
+      {
+        relative_linear_velocity = (origin_cog - link.previous_origin_cog) / dt;
+        const Eigen::AngleAxisd rotation_change(
+          cog_from_link * link.previous_rotation_cog.transpose());
+        relative_angular_velocity = rotation_change.axis() * rotation_change.angle() / dt;
+      }
+    }
+    link.previous_origin_cog = origin_cog;
+    link.previous_rotation_cog = cog_from_link;
+    link.previous_time = now;
+
+    const Eigen::Matrix3d link_from_cog = cog_from_link.transpose();
+    const Eigen::Vector3d omega_link = link_from_cog * (cog_omega + relative_angular_velocity);
+    const Eigen::Vector3d linear_link = link_from_cog *
+      (cog_velocity + cog_omega.cross(origin_cog) + relative_linear_velocity - current_cog);
+    Vector6 velocity;
+    velocity << linear_link, omega_link;
+
+    // Requested body-frame nu-dot. Joint acceleration is unavailable; retain
+    // the rigid-body and Coriolis terms generated by the measured joint rate.
+    const Eigen::Vector3d inertial_acceleration_cog = target_acceleration +
+      target_angular_acceleration.cross(origin_cog) +
+      cog_omega.cross(cog_omega.cross(origin_cog)) +
+      2.0 * cog_omega.cross(relative_linear_velocity);
+    const Eigen::Vector3d linear_acceleration_link =
+      link_from_cog * inertial_acceleration_cog - omega_link.cross(linear_link);
+    const Eigen::Vector3d angular_acceleration_link = link_from_cog *
+      (target_angular_acceleration + cog_omega.cross(relative_angular_velocity));
+    Vector6 desired_acceleration;
+    desired_acceleration << linear_acceleration_link, angular_acceleration_link;
+
+    const Vector6 momentum = link.added_mass * velocity;
+    Vector6 added_coriolis;
+    added_coriolis.head<3>() = -momentum.head<3>().cross(omega_link);
+    added_coriolis.tail<3>() = -momentum.head<3>().cross(linear_link) -
+                               momentum.tail<3>().cross(omega_link);
+    const Vector6 link_compensation = ratio *
+      (link.added_mass * desired_acceleration + added_coriolis +
+       link.quadratic_drag * velocity.cwiseProduct(velocity.cwiseAbs()));
+    if (!link_compensation.allFinite())
+    {
+      ROS_ERROR_THROTTLE(1.0, "[UUVDMultilinkController] Invalid fluid compensation for %s", link.name.c_str());
+      continue;
+    }
+
+    const Eigen::Vector3d force_cog = cog_from_link * link_compensation.head<3>();
+    compensation.head<3>() += force_cog;
+    compensation.tail<3>() += cog_from_link * link_compensation.tail<3>() +
+                              origin_cog.cross(force_cog);
+  }
+  return compensation;
+}
+
+void UUVDMultilinkController::publishHydrodynamicCompensationWrench()
+{
+  if (!hydrodynamic_compensation_enabled_ || !hydrodynamic_compensation_pub_)
+    return;
+  geometry_msgs::WrenchStamped wrench;
+  wrench.header.stamp = ros::Time::now();
+  wrench.header.frame_id = cogFrameId(nh_);
+  wrench.wrench.force.x = hydrodynamic_compensation_wrench_[0];
+  wrench.wrench.force.y = hydrodynamic_compensation_wrench_[1];
+  wrench.wrench.force.z = hydrodynamic_compensation_wrench_[2];
+  wrench.wrench.torque.x = hydrodynamic_compensation_wrench_[3];
+  wrench.wrench.torque.y = hydrodynamic_compensation_wrench_[4];
+  wrench.wrench.torque.z = hydrodynamic_compensation_wrench_[5];
+  hydrodynamic_compensation_pub_.publish(wrench);
+}
 void UUVDMultilinkController::controlCore()
 {
   PoseLinearController::controlCore();
@@ -258,6 +474,8 @@ void UUVDMultilinkController::controlCore()
                        robot_model_->getMass() * target_acc_cog.y() - external_force_cog.y(),
                        robot_model_->getMass() * target_acc_cog.z() - external_force_cog.z(),
                        -buoyancy_torque_cog.x(), -buoyancy_torque_cog.y(), -buoyancy_torque_cog.z();
+  hydrodynamic_compensation_wrench_ = computeHydrodynamicCompensation(uav_rot, target_acc_cog);
+  target_wrench_cog += hydrodynamic_compensation_wrench_;
   target_wrench_cog_ = target_wrench_cog;
 
   wrenchAllocation(target_wrench_cog);
@@ -505,6 +723,9 @@ void UUVDMultilinkController::reset()
   target_wrench_cog_.setZero();
   allocation_lambda_.resize(0);
   candidate_yaw_term_ = 0.0;
+  hydrodynamic_compensation_wrench_.setZero();
+  for (auto& link : hydrodynamic_links_)
+    link.previous_time = ros::Time();
 
   setAttitudeGains();
 }
@@ -519,6 +740,7 @@ void UUVDMultilinkController::sendCmd()
   setGimbalAngles();
   publishDebugWrench();
   publishGravityWrench();
+  publishHydrodynamicCompensationWrench();
   
 }
 void UUVDMultilinkController::setGimbalAngles()
