@@ -1,0 +1,24 @@
+# Copy and calibrate before passing this file to bringup.launch.
+can_interface: can0
+rate: 25.0
+command_timeout: 0.0  # Hold the last joint target; set a positive value to enable command timeout.
+feedback_timeout: 0.25
+motors:
+  right:
+    id: 0
+    type: RobStride02
+    direction: -1  # Set to 1 or -1 after checking the installed orientation.
+    offset: 0.0   # Joint zero relative to the motor zero, in rad.
+    lower: -3.14
+    upper: 0.0
+    kp: 20.0      # Tune on the actual mechanism.
+    kd: 1.0
+  left:
+    id: 1
+    type: RobStride02
+    direction: 1  # Set to 1 or -1 after checking the installed orientation.
+    offset: 0.0
+    lower: 0.0
+    upper: 3.14
+    kp: 20.0
+    kd: 1.0

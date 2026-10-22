@@ -23,6 +23,14 @@
   <arg name="config_dir" default="$(find uuv_d)/config" />
   <arg name="mujoco" default="False" />
   <arg name="demo" default="True" />
+  <!-- Set true only when the external joint and gimbal drivers are configured. -->
+  <arg name="external_actuators" default="False" />
+  <arg name="robstride_config" default="" />
+  <arg name="gimbal_pwm_config" default="" />
+  <arg name="arduino_port" default="" />
+  <arg name="arduino_baud" default="115200" />
+  <arg name="xiaomimotor_source" default="/home/doi/code/robstride/xiaomimotor_lib/src" />
+  <arg name="robstride_auto_enable" default="false" />
 
   ###########  Parameters  ###########
   <group ns="$(arg robot_ns)">
@@ -91,9 +99,19 @@
   </include >
 
   ###########  Servo Bridge  ###########
-  <node pkg="aerial_robot_model" type="servo_bridge_node" name="servo_bridge" ns="$(arg robot_ns)" output="screen" >
+  <node pkg="aerial_robot_model" type="servo_bridge_node" name="servo_bridge" ns="$(arg robot_ns)" output="screen" unless="$(eval arg('real_machine') and not arg('simulation') and arg('external_actuators') and arg('onboards_model') == '3_link')" >
     <param name="use_mujoco" value="true" if="$(arg mujoco)"/>
   </node>
+
+  <include file="$(find uuv_d)/launch/includes/external_actuators.launch.xml" if="$(eval arg('real_machine') and not arg('simulation') and arg('external_actuators') and arg('onboards_model') == '3_link')">
+    <arg name="robot_ns" value="$(arg robot_ns)" />
+    <arg name="robstride_config" value="$(arg robstride_config)" />
+    <arg name="gimbal_pwm_config" value="$(arg gimbal_pwm_config)" />
+    <arg name="arduino_port" value="$(arg arduino_port)" />
+    <arg name="arduino_baud" value="$(arg arduino_baud)" />
+    <arg name="xiaomimotor_source" value="$(arg xiaomimotor_source)" />
+    <arg name="robstride_auto_enable" value="$(arg robstride_auto_enable)" />
+  </include>
 
   ########## Simulation in Gazebo #########
   <include file="$(find aerial_robot_simulation)/launch/gazebo.launch" if = "$(eval arg('simulation') and not arg('real_machine') and not arg('mujoco'))" >

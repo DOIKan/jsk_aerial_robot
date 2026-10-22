@@ -1,0 +1,16 @@
+<launch>
+  <arg name="robot_ns" default="uuv_d" />
+  <arg name="gimbal_pwm_config" />
+  <arg name="arduino_port" />
+  <arg name="arduino_baud" default="115200" />
+
+  <group ns="$(arg robot_ns)">
+    <node pkg="uuv_d" type="gimbal_pwm_bridge.py" name="gimbal_pwm_bridge" output="screen">
+      <rosparam file="$(arg gimbal_pwm_config)" command="load" />
+    </node>
+    <node pkg="rosserial_python" type="serial_node.py" name="arduino_rosserial" output="screen">
+      <param name="port" value="$(arg arduino_port)" />
+      <param name="baud" value="$(arg arduino_baud)" />
+    </node>
+  </group>
+</launch>

@@ -1,0 +1,6 @@
+# Copy and calibrate each channel against the physical mechanism.
+calibration:
+  gimbal1: {angle_min: -1.57, angle_center: 0.0, angle_max: 1.57, pulse_min_us: 700, pulse_center_us: 1500, pulse_max_us: 2250, invert: false}
+  gimbal2: {angle_min: -1.57, angle_center: 0.0, angle_max: 1.57, pulse_min_us: 700, pulse_center_us: 1500, pulse_max_us: 2250, invert: false}
+  gimbal3: {angle_min: -1.57, angle_center: 0.0, angle_max: 1.57, pulse_min_us: 700, pulse_center_us: 1500, pulse_max_us: 2250, invert: false}
+  gimbal4: {angle_min: -1.57, angle_center: 0.0, angle_max: 1.57, pulse_min_us: 700, pulse_center_us: 1500, pulse_max_us: 2250, invert: false}

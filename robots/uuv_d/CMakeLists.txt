@@ -72,6 +72,14 @@ add_library(uuv_d_buoyancy_hw_sim src/model/uuv_d_buoyancy_hw_sim.cpp)
 target_compile_definitions(uuv_d_buoyancy_hw_sim PRIVATE SIMULATION)
 target_link_libraries(uuv_d_buoyancy_hw_sim ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
+catkin_install_python(PROGRAMS
+  scripts/robstride_joint_bridge.py
+  scripts/robstride_startup.py
+  scripts/gimbal_pwm_bridge.py
+  scripts/joint_state_merge.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 install(DIRECTORY include/uuv_d/ test/uuv_d/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
@@ -83,6 +91,10 @@ install(DIRECTORY config plugins launch
 install(DIRECTORY bin
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   USE_SOURCE_PERMISSIONS
+)
+
+install(DIRECTORY arduino
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(TARGETS uuv_d_buoyancy_hw_sim

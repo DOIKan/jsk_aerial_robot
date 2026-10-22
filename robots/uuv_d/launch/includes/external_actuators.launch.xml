@@ -1,0 +1,24 @@
+<launch>
+  <arg name="robot_ns" />
+  <arg name="robstride_config" />
+  <arg name="gimbal_pwm_config" />
+  <arg name="arduino_port" />
+  <arg name="arduino_baud" />
+  <arg name="xiaomimotor_source" />
+  <arg name="robstride_auto_enable" default="false" />
+  <group ns="$(arg robot_ns)">
+    <node pkg="uuv_d" type="robstride_joint_bridge.py" name="robstride_joint_bridge" output="screen">
+      <rosparam file="$(arg robstride_config)" command="load" />
+      <env name="PYTHONPATH" value="$(arg xiaomimotor_source):$(optenv PYTHONPATH)" />
+    </node>
+    <node pkg="uuv_d" type="robstride_startup.py" name="robstride_startup" output="screen" if="$(arg robstride_auto_enable)" />
+    <node pkg="uuv_d" type="gimbal_pwm_bridge.py" name="gimbal_pwm_bridge" output="screen">
+      <rosparam file="$(arg gimbal_pwm_config)" command="load" />
+    </node>
+    <node pkg="rosserial_python" type="serial_node.py" name="arduino_rosserial" output="screen">
+      <param name="port" value="$(arg arduino_port)" />
+      <param name="baud" value="$(arg arduino_baud)" />
+    </node>
+    <node pkg="uuv_d" type="joint_state_merge.py" name="joint_state_merge" output="screen" />
+  </group>
+</launch>

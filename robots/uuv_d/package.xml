@@ -39,6 +39,9 @@
   <run_depend>pluginlib</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>sensor_msgs</run_depend>
+  <run_depend>python3-can</run_depend>
+  <run_depend>rosserial_python</run_depend>
+  <run_depend>std_msgs</run_depend>
   <run_depend>spinal</run_depend>
   <run_depend>std_srvs</run_depend>
   <run_depend>tf</run_depend>
