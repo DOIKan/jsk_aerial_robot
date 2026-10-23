@@ -1,0 +1,9 @@
+# Gazebo startup uses near-neutral buoyancy so the unarmed robot stays near
+# spawn_z while keyboard_command sends the separate arm and takeoff commands.
+# URDF mass: 4.133 kg base_link + 8 * 0.0091 kg rotors + 0.00001 kg root.
+# empty_underwater.world uses 9.8 m/s^2, while buoyancy uses 9.80665 m/s^2.
+environment:
+  buoyancy:
+    links:
+      base_link:
+        volume: 0.00420296  # m^3 at rho_water = 1000 kg/m^3

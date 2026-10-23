@@ -4,6 +4,7 @@
 #include <spinal/FourAxisCommand.h>
 #include <spinal/RollPitchYawTerms.h>
 #include <spinal/TorqueAllocationMatrixInv.h>
+#include <Eigen/Geometry>
 
 namespace aerial_robot_control
 {
@@ -34,6 +35,24 @@ private:
   std::vector<float> target_base_thrust_;
   double target_roll_;
   double target_pitch_;
+  using Vector6 = Eigen::Matrix<double, 6, 1>;
+  using Matrix6 = Eigen::Matrix<double, 6, 6>;
+  bool external_wrench_feedforward_enabled_ = false;
+  bool buoyancy_feedforward_enabled_ = false;
+  bool hydrodynamic_feedforward_enabled_ = false;
+  double rho_water_ = 1000.0;
+  double submerged_ratio_ = 0.0;
+  double buoyancy_volume_ = 0.0;
+  KDL::Vector buoyancy_cob_;
+  Eigen::Vector3d current_velocity_world_ = Eigen::Vector3d::Zero();
+  Matrix6 added_mass_ = Matrix6::Zero();
+  Matrix6 quadratic_drag_ = Matrix6::Zero();
+  Vector6 feedforward_wrench_ = Vector6::Zero();
+  ros::Publisher feedforward_wrench_pub_;
+  void loadExternalWrenchFeedforward();
+  Vector6 computeExternalWrenchFeedforward(const tf::Matrix3x3& cog_rotation,
+                                           const tf::Vector3& target_acceleration_cog);
+  void publishExternalWrenchFeedforward();
   void sendFourAxisCommand();
   void sendTorqueAllocationMatrixInv();
   void setAttitudeGains();

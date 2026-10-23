@@ -3,13 +3,20 @@
     xmlns:xacro="http://www.ros.org/wiki/xacro" name="uuv_d" >
 
   <xacro:arg name="robot_name" default="uuv_d" />
+  <xacro:arg name="external_wrench_feedforward" default="false" />
 
   <!-- robot urdf -->
   <xacro:include filename="$(find uuv_d)/robots/prototype_202605/robot.urdf.xacro" />
 
   <!-- gazebo plugin for default controller and sensors -->
   <xacro:include filename="$(find aerial_robot_simulation)/xacro/spinal.gazebo.xacro" />
-  <xacro:gazebo_spinal robot_name="$(arg robot_name)" gps_frame="fc"/>
+  <xacro:include filename="$(find uuv_d)/robots/3_link/spinal.gazebo.xacro" />
+  <xacro:if value="$(arg external_wrench_feedforward)">
+    <xacro:gazebo_spinal_3_link robot_name="$(arg robot_name)" mag_frame="fc" gps_frame="fc"/>
+  </xacro:if>
+  <xacro:unless value="$(arg external_wrench_feedforward)">
+    <xacro:gazebo_spinal robot_name="$(arg robot_name)" gps_frame="fc"/>
+  </xacro:unless>
 
   <xacro:macro name="gazebo_link_color" params="link rgba emissive">
     <gazebo reference="${link}">
@@ -24,8 +31,9 @@
     <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
 
-  <gazebo>
-    <plugin name="uuv_plugin" filename="libuuv_underwater_object_ros_plugin.so">
+  <xacro:unless value="$(arg external_wrench_feedforward)">
+    <gazebo>
+      <plugin name="uuv_plugin" filename="libuuv_underwater_object_ros_plugin.so">
       <fluid_density>1000</fluid_density>
       <flow_velocity_topic>/hydrodynamics/current_velocity</flow_velocity_topic>
       <debug>1</debug>
@@ -54,7 +62,8 @@
           <quadratic_damping>-10.0 -10.0 -10.0 -0.02 -0.02 -0.02</quadratic_damping>
         </hydrodynamic_model>
       </link>
-    </plugin>
-  </gazebo>
+      </plugin>
+    </gazebo>
+  </xacro:unless>
 
 </robot>

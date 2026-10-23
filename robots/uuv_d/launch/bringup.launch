@@ -5,6 +5,7 @@
   <arg name="simulation" default="False" />
   <arg name="type" default="quad" />
   <arg name="onboards_model" default="prototype_202605" />
+  <arg name="external_wrench_feedforward" default="false" />
   <arg name="estimate_mode"  default= "1" />
   <arg name="sim_estimate_mode"  default= "2" />
   <arg name="headless" default="True" />
@@ -57,10 +58,13 @@
 
     ###########  Environment Config  ###########
     <rosparam file="$(arg config_dir)/Environment.yaml" command="load" />
+    <rosparam file="$(arg config_dir)/prototype_202605/Environment.yaml" command="load" if="$(eval arg('onboards_model') == 'prototype_202605' and arg('external_wrench_feedforward'))" />
+    <rosparam file="$(arg config_dir)/prototype_202605/SimulationEnvironment.yaml" command="load" if="$(eval arg('onboards_model') == 'prototype_202605' and arg('external_wrench_feedforward') and arg('simulation') and not arg('real_machine'))" />
     <rosparam file="$(arg config_dir)/3_link/Environment.yaml" command="load" if="$(eval arg('onboards_model') == '3_link')" />
 
     ###########  Control  ###########
     <rosparam file="$(arg config_dir)/$(arg onboards_model)/FlightControl.yaml" command="load" />
+    <param name="controller/external_wrench_feedforward_enabled" value="$(arg external_wrench_feedforward)" if="$(eval arg('onboards_model') == 'prototype_202605')" />
 
     ###########  Sensor Fusion  ###########
     <rosparam file="$(arg config_dir)/$(arg onboards_model)/StateEstimation.yaml" command="load" />
@@ -82,6 +86,7 @@
   <arg name="description_mode" value="gazebo" if="$(arg simulation)" />
   <include file="$(find aerial_robot_model)/launch/aerial_robot_model.launch" >
     <arg name="headless" value="$(arg headless)" />
+    <arg name="model_options" value="external_wrench_feedforward:=$(arg external_wrench_feedforward)" if="$(eval arg('onboards_model') == 'prototype_202605' and arg('simulation'))" />
     <arg name="robot_model" value="$(find uuv_d)/robots/$(arg onboards_model)/robot.$(arg description_mode).xacro" unless="$(arg direct_model)"/>
     <arg name="robot_model" value="$(arg direct_model_name)" if="$(arg direct_model)"/>
     <arg name="robot_ns" value="$(arg robot_ns)" />

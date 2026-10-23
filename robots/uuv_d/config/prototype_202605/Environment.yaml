@@ -1,0 +1,35 @@
+# Controller feedforward parameters for prototype_202605. The controller uses
+# only base_link. bringup.launch loads this file when
+# external_wrench_feedforward:=true.
+environment:
+  buoyancy:
+    per_link_enabled: true
+    submerged_ratio: 1.0
+    links:
+      base_link:
+        volume: 0.0047  # m^3; vehicle displacement estimate for non-simulation use
+        cob: [0.0000050128636417574, 0.0, -0.01]  # base_link frame; initial estimate
+
+  hydrodynamics:
+    enabled: true
+    controller_compensation_enabled: true
+    current_velocity_world: [0.0, 0.0, 0.0]
+    links:
+      base_link:
+        # [u, v, w, p, q, r] in the base_link frame.
+        # Added mass is unknown. Replace these initial values with measured coefficients.
+        added_mass:
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+          - [0, 0, 0, 0, 0, 0]
+        quadratic_drag:
+          # Positive magnitudes from the old UUV plugin's quadratic damping.
+          - [10.0, 0, 0, 0, 0, 0]
+          - [0, 10.0, 0, 0, 0, 0]
+          - [0, 0, 10.0, 0, 0, 0]
+          - [0, 0, 0, 0.02, 0, 0]
+          - [0, 0, 0, 0, 0.02, 0]
+          - [0, 0, 0, 0, 0, 0.02]
